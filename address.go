@@ -7,7 +7,7 @@ import (
 
 // warning: be careful when adding new fields, today the compatibility is only done for Nominatim
 // if you want to add more drivers (i.e., gmap), please do not add fields, but create a mapping
-// funciton that transforms a gmap struct to Address
+// function that transforms a gmap struct to Address
 // if unsure, ask @moul
 
 type Address struct {
@@ -41,8 +41,7 @@ func (a *Address) MinimalCompare(b *Address) (string, string) {
 		bRet := fmt.Sprintf("%s, %s", b.SmartCity(), b.Country.Short())
 		return aRet, bRet
 	}
-	if a.State != a.State {
-	}
+	// FIXME: add more checks: states, cities, etc
 	return a.Short(), b.Short()
 }
 
@@ -71,7 +70,7 @@ func (a *Address) Full() string {
 
 // Short returns a minimalist representation of the address
 func (a *Address) Short() string {
-	parts := []string{}
+	var parts []string
 	switch a.CountryCode {
 	case "fr":
 		parts = []string{
