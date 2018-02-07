@@ -77,6 +77,25 @@ func ExampleAddress_Full_fr() {
 	// Output: 96, Boulevard Bessières, Épinettes, 17th Arrondissement, Paris, Ile-de-France, 75017, France
 }
 
+func ExampleAddress_Letter_fr() {
+	address := Address{
+		HouseNumber:  "96",
+		Road:         "Boulevard Bessières",
+		Suburb:       "Épinettes",
+		CityDistrict: "17th Arrondissement",
+		County:       "Paris",
+		State:        "Ile-de-France",
+		Country:      "France",
+		PostCode:     "75017",
+		CountryCode:  "fr",
+	}
+	fmt.Println(address.Letter())
+	// Output:
+	// 96, Boulevard Bessières
+	// 75017 - Paris
+	// France
+}
+
 func Test(t *testing.T) {
 	type NominatimResponse struct {
 		DisplayName string  `json:"display_name"`
@@ -108,46 +127,55 @@ func Test(t *testing.T) {
 		So(adds[0].Address.Full(), ShouldEqual, "137, Pilkington Avenue, Sutton Coldfield, Birmingham, West Midlands Combined Authority, West Midlands, England, B72 1LH, United Kingdom")
 		So(adds[0].Address.Short(), ShouldEqual, "137, Pilkington Avenue, Birmingham")
 		So(adds[0].Address.Long(), ShouldEqual, "137, Pilkington Avenue, Sutton Coldfield, Birmingham, West Midlands Combined Authority, West Midlands, England, B72 1LH, UK")
+		So(adds[0].Address.Letter(), ShouldEqual, "137, Pilkington Avenue\nB72 1LH - Birmingham\nUnited Kingdom")
 
 		So(adds[1].DisplayName, ShouldEqual, "Big Mesa Road, Gunnison County, Colorado, United States of America")
 		So(adds[1].Address.Full(), ShouldEqual, "Big Mesa Road, Gunnison County, Colorado, United States of America")
 		So(adds[1].Address.Short(), ShouldEqual, "Big Mesa Road, Gunnison County, Colorado")
 		So(adds[1].Address.Long(), ShouldEqual, "Big Mesa Road, Gunnison County, Colorado, USA")
+		So(adds[1].Address.Letter(), ShouldEqual, "Big Mesa Road\nGunnison County\nUnited States of America")
 
 		So(adds[2].DisplayName, ShouldEqual, "Silauri, Ozurgeti Municipality, Guria, Georgia")
 		So(adds[2].Address.Full(), ShouldEqual, "Silauri, Ozurgeti Municipality, Guria, Georgia")
 		So(adds[2].Address.Short(), ShouldEqual, "Silauri")
 		So(adds[2].Address.Long(), ShouldEqual, "Silauri, Ozurgeti Municipality, Guria, Georgia")
+		So(adds[2].Address.Letter(), ShouldEqual, "Silauri\nGeorgia")
 
 		So(adds[3].DisplayName, ShouldEqual, "96, Boulevard Bessières, Épinettes, 17th Arrondissement, Paris, Ile-de-France, Metropolitan France, 75017, France")
 		So(adds[3].Address.Full(), ShouldEqual, "96, Boulevard Bessières, Épinettes, 17th Arrondissement, Paris, Ile-de-France, 75017, France")
 		So(adds[3].Address.Short(), ShouldEqual, "96 Boulevard Bessières, Paris")
 		So(adds[3].Address.Long(), ShouldEqual, "96 Boulevard Bessières 75017 Paris, France")
+		So(adds[3].Address.Letter(), ShouldEqual, "96, Boulevard Bessières\n75017 - Paris\nFrance")
 
 		So(adds[4].DisplayName, ShouldEqual, "Gare Saint-Lazare, Parking Saint-Lazare, Europe, 8th Arrondissement of Paris, Paris, Ile-de-France, Metropolitan France, 75008, France")
 		So(adds[4].Address.Full(), ShouldEqual, "Gare Saint-Lazare, Parking Saint-Lazare, Europe, 8th Arrondissement of Paris, Paris, Ile-de-France, 75008, France")
 		So(adds[4].Address.Short(), ShouldEqual, "Gare Saint-Lazare, Paris")
 		So(adds[4].Address.Long(), ShouldEqual, "Gare Saint-Lazare 75008 Paris, France")
+		So(adds[4].Address.Letter(), ShouldEqual, "Gare Saint-Lazare\nParking Saint-Lazare\n75008 - Paris\nFrance")
 
 		So(adds[5].DisplayName, ShouldEqual, "15, Rue Eugène Varlin, Hôpital-St-Louis, 10th Arrondissement, Campagne à Paris, Paris, Ile-de-France, Metropolitan France, 75010, France")
 		So(adds[5].Address.Full(), ShouldEqual, "15, Rue Eugène Varlin, Hôpital-St-Louis, 10th Arrondissement, Campagne à Paris, Paris, Ile-de-France, 75010, France")
 		So(adds[5].Address.Short(), ShouldEqual, "15 Rue Eugène Varlin, Paris")
 		So(adds[5].Address.Long(), ShouldEqual, "15 Rue Eugène Varlin 75010 Paris, France")
+		So(adds[5].Address.Letter(), ShouldEqual, "15, Rue Eugène Varlin\n75010 - Paris\nFrance")
 
 		So(adds[6].DisplayName, ShouldEqual, "D 73a, Morin, Gratens, Muret, Haute-Garonne, Occitania, Metropolitan France, 31430, France")
 		So(adds[6].Address.Full(), ShouldEqual, "D 73a, Morin, Gratens, Muret, Occitania, 31430, France")
 		So(adds[6].Address.Short(), ShouldEqual, "D 73a, Gratens")
 		So(adds[6].Address.Long(), ShouldEqual, "D 73a 31430 Gratens, France")
+		So(adds[6].Address.Letter(), ShouldEqual, "D 73a\n31430 - Gratens\nFrance")
 
 		So(adds[7].DisplayName, ShouldEqual, "Lattre de Tassigny, Avenue Maréchal de Lattre de Tassigny, Zone commerciale Mistral, La Baronne, Manosque, Forcalquier, Alpes-de-Haute-Provence, Provence-Alpes-Côte d'Azur, Metropolitan France, 04100, France")
 		So(adds[7].Address.Full(), ShouldEqual, "Lattre de Tassigny, Avenue Maréchal de Lattre de Tassigny, La Baronne, Zone commerciale Mistral, Manosque, Forcalquier, Provence-Alpes-Côte d'Azur, 04100, France")
 		So(adds[7].Address.Short(), ShouldEqual, "Avenue Maréchal de Lattre de Tassigny, Manosque")
 		So(adds[7].Address.Long(), ShouldEqual, "Avenue Maréchal de Lattre de Tassigny 04100 Manosque, France")
+		So(adds[7].Address.Letter(), ShouldEqual, "Avenue Maréchal de Lattre de Tassigny\n04100 - Manosque\nFrance")
 
 		So(adds[8].DisplayName, ShouldEqual, "Le Malakoff, Avenue Raymond Poincaré, Chaillot, 16e, Paris, Île-de-France, France métropolitaine, 75116, France")
 		So(adds[8].Address.Full(), ShouldEqual, "Avenue Raymond Poincaré, Chaillot, 16e, Paris, Paris, Île-de-France, 75116, France")
 		So(adds[8].Address.Short(), ShouldEqual, "Avenue Raymond Poincaré, Paris")
 		So(adds[8].Address.Long(), ShouldEqual, "Avenue Raymond Poincaré 75116 Paris, France")
+		So(adds[8].Address.Letter(), ShouldEqual, "Avenue Raymond Poincaré\n75116 - Paris\nFrance")
 
 		testMinimalCompare := func(aIdx, bIdx int) string {
 			a := adds[aIdx]
