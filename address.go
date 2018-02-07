@@ -148,3 +148,14 @@ func (a *Address) Long() string {
 	}
 	return strings.Join(nonEmpty(parts), ", ")
 }
+
+// Letter returns an address in a letter-ready format (multiline)
+func (a *Address) Letter() string {
+	lines := []string{
+		a.Building,
+		strings.Join(nonEmpty([]string{a.HouseNumber, a.Road}), ", "),
+		strings.Join(nonEmpty([]string{a.PostCode, a.SmartCity()}), " - "),
+		string(a.Country),
+	}
+	return strings.Join(nonEmpty(lines), "\n")
+}
