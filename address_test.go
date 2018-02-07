@@ -8,13 +8,82 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
+func ExampleAddress_fr() {
+	address := Address{
+		HouseNumber:  "96",
+		Road:         "Boulevard Bessières",
+		Suburb:       "Épinettes",
+		CityDistrict: "17th Arrondissement",
+		County:       "Paris",
+		State:        "Ile-de-France",
+		Country:      "France",
+		PostCode:     "75017",
+		CountryCode:  "fr",
+	}
+	fmt.Println(address.Short())
+	fmt.Println(address.Long())
+	fmt.Println(address.Full())
+	// Output:
+	// 96 Boulevard Bessières, Paris
+	// 96 Boulevard Bessières 75017 Paris, France
+	// 96, Boulevard Bessières, Épinettes, 17th Arrondissement, Paris, Ile-de-France, 75017, France
+}
+
+func ExampleAddress_Short_fr() {
+	address := Address{
+		HouseNumber:  "96",
+		Road:         "Boulevard Bessières",
+		Suburb:       "Épinettes",
+		CityDistrict: "17th Arrondissement",
+		County:       "Paris",
+		State:        "Ile-de-France",
+		Country:      "France",
+		PostCode:     "75017",
+		CountryCode:  "fr",
+	}
+	fmt.Println(address.Short())
+	// Output: 96 Boulevard Bessières, Paris
+}
+
+func ExampleAddress_Long_fr() {
+	address := Address{
+		HouseNumber:  "96",
+		Road:         "Boulevard Bessières",
+		Suburb:       "Épinettes",
+		CityDistrict: "17th Arrondissement",
+		County:       "Paris",
+		State:        "Ile-de-France",
+		Country:      "France",
+		PostCode:     "75017",
+		CountryCode:  "fr",
+	}
+	fmt.Println(address.Long())
+	// Output: 96 Boulevard Bessières 75017 Paris, France
+}
+
+func ExampleAddress_Full_fr() {
+	address := Address{
+		HouseNumber:  "96",
+		Road:         "Boulevard Bessières",
+		Suburb:       "Épinettes",
+		CityDistrict: "17th Arrondissement",
+		County:       "Paris",
+		State:        "Ile-de-France",
+		Country:      "France",
+		PostCode:     "75017",
+		CountryCode:  "fr",
+	}
+	fmt.Println(address.Full())
+	// Output: 96, Boulevard Bessières, Épinettes, 17th Arrondissement, Paris, Ile-de-France, 75017, France
+}
+
 func Test(t *testing.T) {
 	type NominatimResponse struct {
 		DisplayName string  `json:"display_name"`
 		Address     Address `json:"address"`
 	}
 	Convey("Testing package", t, FailureContinues, func() {
-		adds := make([]NominatimResponse, 8)
+		adds := make([]NominatimResponse, 9)
 
 		// https://nominatim.openstreetmap.org/reverse?format=json&lat=52.5487429714954&lon=-1.81602098644987&zoom=18&addressdetails=1
 		So(json.Unmarshal([]byte(`{"place_id":"91015268","licence":"Data © OpenStreetMap contributors, ODbL 1.0. http:\/\/www.openstreetmap.org\/copyright","osm_type":"way","osm_id":"90394420","lat":"52.54877605","lon":"-1.81627033283164","display_name":"137, Pilkington Avenue, Sutton Coldfield, Birmingham, West Midlands Combined Authority, West Midlands, England, B72 1LH, United Kingdom","address":{"house_number":"137","road":"Pilkington Avenue","suburb":"Sutton Coldfield","city":"Birmingham","county":"West Midlands Combined Authority","state_district":"West Midlands","state":"England","postcode":"B72 1LH","country":"United Kingdom","country_code":"gb"},"boundingbox":["52.5487321","52.5488299","-1.8163514","-1.8161885"]}`), &adds[0]), ShouldBeNil)
@@ -32,6 +101,8 @@ func Test(t *testing.T) {
 		So(json.Unmarshal([]byte(`{"place_id":"107350828","licence":"Data © OpenStreetMap contributors, ODbL 1.0. http:\/\/www.openstreetmap.org\/copyright","osm_type":"way","osm_id":"156074292","lat":"43.3340195","lon":"1.1404921","display_name":"D 73a, Morin, Gratens, Muret, Haute-Garonne, Occitania, Metropolitan France, 31430, France","address":{"road":"D 73a","suburb":"Morin","village":"Gratens","county":"Muret","state":"Occitania","country":"France","postcode":"31430","country_code":"fr"},"boundingbox":["43.3214383","43.3436739","1.1349576","1.1498949"]}`), &adds[6]), ShouldBeNil)
 		// https://nominatim.openstreetmap.org/reverse?format=json&lat=43.8251492&lon=5.7885946&zoom=18&addressdetails=1
 		So(json.Unmarshal([]byte(`{"place_id":"19952168","licence":"Data © OpenStreetMap contributors, ODbL 1.0. http:\/\/www.openstreetmap.org\/copyright","osm_type":"node","osm_id":"1897135018","lat":"43.8251492","lon":"5.7885946","display_name":"Lattre de Tassigny, Avenue Maréchal de Lattre de Tassigny, Zone commerciale Mistral, La Baronne, Manosque, Forcalquier, Alpes-de-Haute-Provence, Provence-Alpes-Côte d'Azur, Metropolitan France, 04100, France","address":{"bus_stop":"Lattre de Tassigny","road":"Avenue Maréchal de Lattre de Tassigny","commercial":"Zone commerciale Mistral","suburb":"La Baronne","town":"Manosque","county":"Forcalquier","state":"Provence-Alpes-Côte d'Azur","country":"France","postcode":"04100","country_code":"fr"},"boundingbox":["43.8250492","43.8252492","5.7884946","5.7886946"]}`), &adds[7]), ShouldBeNil)
+		// https://nominatim.openstreetmap.org/reverse?format=json&lat=48.8635833&lon=2.2871285&zoom=18&addressdetails=1
+		So(json.Unmarshal([]byte(`{"place_id":"8984951","licence":"Data © OpenStreetMap contributors, ODbL 1.0. http:\/\/www.openstreetmap.org\/copyright","osm_type":"node","osm_id":"932277394","lat":"48.8637222","lon":"2.2870818","display_name":"Le Malakoff, Avenue Raymond Poincaré, Chaillot, 16e, Paris, Île-de-France, France métropolitaine, 75116, France","address":{"cafe":"Le Malakoff","road":"Avenue Raymond Poincaré","suburb":"Chaillot","city_district":"16e","city":"Paris","county":"Paris","state":"Île-de-France","country":"France","postcode":"75116","country_code":"fr"},"boundingbox":["48.8636222","48.8638222","2.2869818","2.2871818"]}`), &adds[8]), ShouldBeNil)
 
 		So(adds[0].DisplayName, ShouldEqual, "137, Pilkington Avenue, Sutton Coldfield, Birmingham, West Midlands Combined Authority, West Midlands, England, B72 1LH, United Kingdom")
 		So(adds[0].Address.Full(), ShouldEqual, "137, Pilkington Avenue, Sutton Coldfield, Birmingham, West Midlands Combined Authority, West Midlands, England, B72 1LH, United Kingdom")
@@ -72,6 +143,11 @@ func Test(t *testing.T) {
 		So(adds[7].Address.Full(), ShouldEqual, "Lattre de Tassigny, Avenue Maréchal de Lattre de Tassigny, La Baronne, Zone commerciale Mistral, Manosque, Forcalquier, Provence-Alpes-Côte d'Azur, 04100, France")
 		So(adds[7].Address.Short(), ShouldEqual, "Avenue Maréchal de Lattre de Tassigny, Manosque")
 		So(adds[7].Address.Long(), ShouldEqual, "Avenue Maréchal de Lattre de Tassigny 04100 Manosque, France")
+
+		So(adds[8].DisplayName, ShouldEqual, "Le Malakoff, Avenue Raymond Poincaré, Chaillot, 16e, Paris, Île-de-France, France métropolitaine, 75116, France")
+		So(adds[8].Address.Full(), ShouldEqual, "Avenue Raymond Poincaré, Chaillot, 16e, Paris, Paris, Île-de-France, 75116, France")
+		So(adds[8].Address.Short(), ShouldEqual, "Avenue Raymond Poincaré, Paris")
+		So(adds[8].Address.Long(), ShouldEqual, "Avenue Raymond Poincaré 75116 Paris, France")
 
 		testMinimalCompare := func(aIdx, bIdx int) string {
 			a := adds[aIdx]
